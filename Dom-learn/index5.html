@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .box {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      /* top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);  */
+      background-color: salmon;
+      transition: all .1s;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+
+  <script src="./EventUtil.js"></script>
+  <script>
+    window.onload = function() {
+      
+      (function init(doc){
+        
+        let box = doc.getElementsByClassName('box')[0],
+            boxWidth = box.offsetWidth,
+            boxHeight = box.offsetWidth;
+        let {offsetTop: boxTop, offsetLeft: boxLeft} = getOffset(box),
+          // 中间坐标 
+          originX = boxLeft + boxWidth / 2,
+          originY = boxTop + boxHeight / 2;          
+
+            box.addEventListener('mouseenter', (e)=> {
+              let eve = e || window.event,
+                  mousePosX = eve.clientX,
+                  mousePosY = eve.clientY,
+                  // 与原点的距离 坐标
+                  x = mousePosX - originX,
+                  y = mousePosY - originY,
+                  // 判断象限
+                  direction = '';
+                  // atan2 （-pi ~ pi） -180度 - 180度
+                  let radius = Math.atan2(y, x) * (180 / Math.PI)
+                  
+                  // right -45 ～ 45
+                  // top -45 ～ -135
+                  // left -135 ~ -180 180 ~ 135
+                  // bottom 135 ~ 45
+                      
+                  switch(true) {
+                    case (radius > -45 && radius <= 45):
+                      direction = 'right'
+                      break;
+                    case (radius <=-45  && radius > -135):
+                      direction = 'top'
+                      break;
+                    case ((radius <= -135 && radius > -180) || (radius <= 180 && radius > 135)):
+                      direction = 'left'
+                      break;
+                    case (radius <= 135 && radius > 45):
+                      direction = 'bottom'
+                      break;
+                    default: 
+                      break;
+                  }
+                  console.log(direction);
+                  
+                  // box.style[direction] = '-100px'
+
+                  
+            })        
+
+
+      })(document);
+
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .normal {
+      width: 500px;
+      height: 100px;
+      background: aquamarine;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: salmon;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .box:hover {
+      cursor: move;
+    }
+
+    .box2 {
+      width: 150px;
+      height: 150px;
+      background-color: salmon;
+      border-radius: 50%;
+      border: 1px solid bisque;
+      position: absolute;
+      top: 120px;
+      left: 50px;
+    }
+    .box2:hover {
+      cursor: move;
+    }
+    body {
+      margin:  0;
+    }
+  </style>
+</head>
+<body>
+  <div class="normal"></div>
+  <div class="box" _type="drag" style="background-color: red;"></div>
+  <div class="box2" _type="drag"></div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  
+  <script src="./EventUtil.js"></script>
+  <script>
+    // clientX/Y 鼠标相对于当前可视区域的坐标（不包含滚动条）
+    // screenX/Y 鼠标相对于屏幕的坐标
+    // e.layerX/Y 同pageX/Y 但是 ie11 以下同 clientX/Y
+    // e.pageX/Y ie9以下不支持 且归到jQuery下
+    // e.offsetX/Y 鼠标相对于块元素左上角（0，0）的坐标 （包含边框， Safari不包含）
+    
+
+    document.onmousedown = function(e) {
+      let eve = e || window.event,
+      tar = eve.target || eve.srcElement
+
+      // 是拖拽元素
+      if(tar.getAttribute("_type") && tar.getAttribute("_type") === 'drag') {
+
+        let {offsetX: gutterX, offsetY: gutterY} = e
+        // let tagName = tar.tagName.toLowerCase(),
+        let newEle = tar.cloneNode(true)
+        
+        // 复制一块新的元素
+        // newEle.className = tar.className        
+        newEle.style.opacity = '0.3'
+        newEle.style.top = parseInt(tar.style.top) + 10
+        newEle.style.left = parseInt(tar.style.left) + 10
+        document.body.appendChild(newEle)
+
+          document.onmousemove = function(e) {
+          let eve = e || window.event
+          let {x, y} = getMousePos(eve)
+          let {width, height} = getDocSize()
+
+          let  moveX = x - gutterX,
+              moveY = y - gutterY
+                // 右边界
+          
+          if(moveX <= 0) {
+            moveX = 0
+          } else {
+            if(moveX + div.offsetWidth >= width) {
+              moveX = width - div.offsetWidth
+            }
+          }
+
+          if(moveY <= 0) {
+            moveY = 0
+          } else {
+            if(moveY + div.offsetHeight >= height) {
+              moveY = height - div.offsetHeight
+            }
+          }
+
+          newEle.style.left = moveX + 'px'
+          newEle.style.top = moveY + 'px'
+
+          // cancelBubble(e)
+          // preventDefaultEvent(e)
+        }
+        
+        document.onmouseup = function() {
+          newEle.style.opacity = 1
+          document.onmousemove = null
+          document.onmouseup = null
+          tar.remove()
+        }
+
+      }
+      // 禁止冒泡
+      cancelBubble(eve)
+          
+    }
+    let div = document.getElementsByClassName('box')[0]    
+    // div.onmousedown = function(e) {
+    //   let gutterX = e.offsetX,
+    //       gutterY = e.offsetY
+      
+    //   let newDiv = document.createElement('div')
+    //   newDiv.classList.add('box')
+    //   newDiv.style.opacity = '0.6'
+    //   newDiv.style.top = parseInt(div.style.top) + 10
+    //   newDiv.style.left = parseInt(div.style.left) + 10
+    //   document.body.appendChild(newDiv)
+      
+      // document.onmousemove = function(e) {
+      //   let eve = e || window.event
+      //   let {x, y} = getMousePos(eve)
+      //   let {width, height} = getDocSize()
+
+      //   let  moveX = x - gutterX,
+      //        moveY = y - gutterY
+      //         // 右边界
+        
+      //   if(moveX <= 0) {
+      //     moveX = 0
+      //   } else {
+      //     if(moveX + div.offsetWidth >= width) {
+      //       moveX = width - div.offsetWidth
+      //     }
+      //   }
+
+      //   if(moveY <= 0) {
+      //     moveY = 0
+      //   } else {
+      //     if(moveY + div.offsetHeight >= height) {
+      //       moveY = height - div.offsetHeight
+      //     }
+      //   }
+
+      //   newDiv.style.left = moveX + 'px'
+      //   newDiv.style.top = moveY + 'px'
+
+      //   // cancelBubble(e)
+      //   // preventDefaultEvent(e)
+      // }
+      
+      // document.onmouseup = function() {
+      //   document.onmousemove = null
+      //   document.onmouseup = null
+      //   div.remove()
+      // }
+      
+    // }
+    
+    </script>
+</body>
+</html>

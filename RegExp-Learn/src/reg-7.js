@@ -3,4 +3,4 @@
 let str = 'http://www.baidu.com',
     str1 = 'https://netfee.cn',
     str2 = 'http://renrenwang.shipin.com',
-    RegExp = /^https?:\/\/((?:\w+\.?)+(?:com|cn|org))/g
+    RegExp = /^https?:\/\/((?:\w+\.?)+(?:com|cn|org))$/g

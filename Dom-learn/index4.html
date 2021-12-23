@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .img-container {
+      width: 450px;
+      height: 200px;
+      box-shadow: 0 0 5px #333333;
+      position: relative;
+      /* overflow: hidden; */
+    }
+    .tool-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      cursor: move;
+      display: none;
+      box-shadow: 0 0 5px #333333;
+    }
+    .tool-wrap-img {
+      width: 450px;
+      height: 200px;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="img-container">
+    <span class="tool-wrap">
+      <img src="./img/5f33bb411c177.jpg" class="tool-wrap-img" alt="">
+    </span>
+    <span class="img-wrap">
+      <img src="./img/5f33bb411c177.jpg" alt="" />
+    </span>
+  </div>
+  <script>
+
+    window.onload = function() {
+      const imgWrap = document.getElementsByClassName('img-container')[0],
+            toolWrap = document.getElementsByClassName('tool-wrap')[0],
+            toolWrapImg = document.getElementsByClassName('tool-wrap-img')[0],
+            // 图片距离左边距离
+            imgX = imgWrap.offsetLeft,
+            imgY = imgWrap.offsetTop,
+            // 图片工具的宽高 offsetHeight / offsetWidth 取不到
+            imgToolWidth = parseInt(getComputedStyle(toolWrap).width),
+            imgToolHeight = parseInt(getComputedStyle(toolWrap).height),
+            // 图片的宽高
+            imgWidth = parseInt(getComputedStyle(imgWrap).width),
+            imgHeight = parseInt(getComputedStyle(imgWrap).height);
+          
+      (function init(){
+        // 鼠标进入
+        imgWrap.addEventListener('mouseenter', (e)=> {
+          let eve = e || window.event,
+              gutterX = eve.clientX - imgX - imgToolWidth / 2,
+              gutterY = eve.clientY - imgY - imgToolHeight / 2;
+              
+          toolWrap.style.display = 'block'
+          console.log('显示了', toolWrap.style.display);
+          
+          changeToolPos(gutterX, gutterY)
+          
+          // 鼠标移动
+          imgWrap.addEventListener('mousemove', (e)=> {
+            mouseMove(e)
+          })
+
+          // 鼠标离开
+          imgWrap.addEventListener('mouseleave', ()=> {            
+            console.log('隐藏了');
+            
+            toolWrap.style.display = 'none'
+            // 解除绑定
+            toolWrap.removeEventListener('mousemove', mouseMove)
+          })
+          
+          function mouseMove(e) {
+            let eve = e || window.event,
+              gutterX = eve.clientX - imgX - imgToolWidth / 2,
+              gutterY = eve.clientY - imgY - imgToolHeight / 2;
+              
+              mousePosX = eve.clientX - imgX
+              mousePosY = eve.clientY - imgY
+
+              // ! 边界情况隐藏
+              if(mousePosX < 0 || mousePosX > imgWidth || mousePosY < 0 || mousePosY > imgHeight) {
+                toolWrap.style.display = 'none'
+              }
+              changeToolPos(gutterX, gutterY);
+              removeToolImg(gutterX, gutterY);
+          }
+
+          // 修改放大镜的位置
+          function changeToolPos(left, top) {
+            toolWrap.style.top = top + 'px'
+            toolWrap.style.left = left + 'px'
+            toolWrap.style.transform = 'scale(1.3)'
+          }
+
+          // 修改放大镜里的图片 反方向移动 放大
+          function removeToolImg(left, top) {
+            toolWrapImg.style.left = -left + 'px'
+            toolWrapImg.style.top = -top + 'px'
+            // toolWrapImg.style.transform = 'scale(1.3)'
+          }
+          
+        })
+      })();
+    }
+  </script>
+</body>
+</html>
