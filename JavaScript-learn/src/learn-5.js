@@ -90,8 +90,62 @@ console.log(x, y, z);
 //  x: 1
 //  y: 0
 //  z: 0
-//  add: function add(n) {return n = n + 1} -> 替换 function add(n){return n = n + 3}
 //  }
 
+// !!!!
+function Foo() {
+  getName = function() {
+    console.log(1);
+    
+  }
+  return this
+}
 
+Foo.getName = function() {
+  console.log(2);
+  
+}
+
+Foo.prototype.getName = function() {
+  console.log(3);
+  
+}
+
+var getName = function() {
+  console.log(4);
+  
+}
+
+function getName() {
+  console.log(5);
+  
+}
+
+Foo.getName()
+getName()
+Foo().getName()
+new Foo.getName()
+new Foo().getName()
+new new Foo().getName()
+
+2  
+4
+1
+2
+3
+3
+
+
+
+function Foo() {}
+Foo.getName = function() {
+  console.log(2);
+}
+Foo.prototype.getName = function() {
+  this.name = 'aven'
+}
+
+let func1 = new Foo.getName()
+
+let func2 = new new Foo().getName()
 
