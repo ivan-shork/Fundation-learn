@@ -1,7 +1,6 @@
 // 所有的被Object 实例化出来的对象都是有prototype的， 原型链的顶端是 Object.prototype
 // 不要说成是Object
 
-
 function Teacher() {
   this.success = {
     name: 'aven',

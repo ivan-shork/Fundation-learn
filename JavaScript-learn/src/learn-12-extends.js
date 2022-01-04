@@ -127,7 +127,7 @@ var initProgrammer = (function() {
 })();
 
 
-
+// 模块化
 ;(function(){
   function Slider(opts) {
 
