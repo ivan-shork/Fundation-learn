@@ -73,3 +73,15 @@ child = new Child({
   school: 'HIti'
 })
 
+
+
+var obj = Object.create(null)
+obj.a = 1
+var childObj = Object.create(obj)
+childObj.__proto__ // undefined
+
+// 之所以是undefined是因为obj的原型是空，所以objchild继承实际上原型链断掉了
+// __proto__ 这个原型链的指针没有了，因为原型链被损坏了
+// 但是继承还是可以继承，内部还是通过[[prototype]]属性往上找查找继承属性
+// !所谓的原型链 就是一个个指针 __proto__ 串起来的，他就是一个指针，指向prototype这个继承属性（这个指针的赋值是在new的时候完成的，往this里塞的）
+// !但是实际上属性的攀升查找仍然是通过内部[[prototype]]这个插槽来的
