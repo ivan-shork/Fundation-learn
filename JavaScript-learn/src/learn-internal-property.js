@@ -22,3 +22,6 @@ new test()
 
 [[Prototype]] 原型特性
 注意和__proto__区分，__proto__是一个原型的引用。
+
+
+[[scope]]作用域链
